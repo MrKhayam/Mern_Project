@@ -1,6 +1,7 @@
 const AsyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 const registerUser = AsyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -24,7 +25,13 @@ const registerUser = AsyncHandler(async (req, res) => {
         email,
         password: hashedPass,
       });
-      res.send(newUser);
+      res.json({
+        _id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        password: newUser.password,
+        token: generateToken(newUser.id),
+      })
     } catch (error) {}
   }
 });
@@ -44,7 +51,13 @@ const loginUser = AsyncHandler(async (req, res) => {
           res.status(401);
           throw new Error("Incorrect Password");
         } else {
-          res.send(findUser);
+          res.json({
+            _id: findUser.id,
+            name: findUser.name,
+            email: findUser.email,
+            password: findUser.password,
+            token: generateToken(findUser.id),
+          });
         }
       } else {
         res.status(404);
@@ -58,16 +71,26 @@ const loginUser = AsyncHandler(async (req, res) => {
 
 const findMe = AsyncHandler(async (req, res) => {
   const user_id = req.params.id;
-  const foundMe = await User.findOne({_id: user_id});
+  const foundMe = await User.findOne({ _id: user_id });
 
   if (foundMe) {
-      res.send(foundMe);
-  }
-  else {
-      res.status(404);
-      throw new Error("User not found...");
+    res.send(foundMe);
+  } else {
+    res.status(404);
+    throw new Error("User not found...");
   }
 });
+
+
+
+
+
+
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
+}
 
 module.exports = {
   registerUser,

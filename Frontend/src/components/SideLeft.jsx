@@ -57,9 +57,9 @@ const SideLeft = () => {
           return (
             <>
               <div
-                key={index}
+                key={item.id}
                 className="text-2xl font-semibold cursor-pointer flex gap-3 items-center"
-              >
+                >
                 {item.icon}
                 {item.title}
               </div>

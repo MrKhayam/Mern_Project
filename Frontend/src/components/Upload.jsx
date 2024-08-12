@@ -11,14 +11,18 @@ import { GrEmoji } from "react-icons/gr";
 const Upload = () => {
   return (
     <>
-      <div className="flex flex-col w-full h-auto px-4 py-5 justify-between">
-        <div className="flex items-center gap-3">
+      <div className="flex bg-white mb-3 flex-col w-full h-auto px-4 py-5 justify-between">
+        <div className="flex items-center gap-3 w-full h-full">
           <img
-            className="w-16 h-16 object-cover object-center rounded-full"
+            className="w-16 h-16 object-cover rounded-full"
             src="https://images.pexels.com/photos/1553783/pexels-photo-1553783.jpeg?cs=srgb&dl=pexels-myca-1553783.jpg&fm=jpg"
             alt=""
           />
-          <input type="text" placeholder="What's happening?" className='text-lg font-semibold outline-none border-none w-full p-3 h-8' />
+          <input
+            type="text"
+            placeholder="What's happening?"
+            className="text-lg font-semibold outline-none border-none w-full p-3 h-8"
+          />
         </div>
         <div className="flex justify-between">
           <div className="icons flex items-center gap-4 ml-20">
@@ -46,7 +50,9 @@ const Upload = () => {
               className="text-blue-500"
             />
           </div>
-          <button className='px-9 py-4 rounded-full bg-blue-500 text-white font-semibold'>Tweet</button>
+          <button className="px-9 py-4 rounded-full bg-blue-500 text-white font-semibold">
+            Tweet
+          </button>
         </div>
       </div>
     </>

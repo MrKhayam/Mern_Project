@@ -26,11 +26,11 @@ const registerUser = AsyncHandler(async (req, res) => {
         password: hashedPass,
       });
       res.json({
-        _id: newUser.id,
+        _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
         password: newUser.password,
-        token: generateToken(newUser.id),
+        token: generateToken(newUser._id),
       })
     } catch (error) {}
   }
@@ -52,7 +52,7 @@ const loginUser = AsyncHandler(async (req, res) => {
           throw new Error("Incorrect Password");
         } else {
           res.json({
-            _id: findUser.id,
+            _id: findUser._id,
             name: findUser.name,
             email: findUser.email,
             password: findUser.password,
@@ -89,7 +89,7 @@ const findMe = AsyncHandler(async (req, res) => {
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
-  });
+  })
 }
 
 module.exports = {
